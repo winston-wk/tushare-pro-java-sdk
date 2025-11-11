@@ -13,6 +13,7 @@ public class Response {
         private List<String> fields;
         private List<List<?>> items;
         private Boolean has_more;  // 分页
+        private Integer count;
 
     }
 

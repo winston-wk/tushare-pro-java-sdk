@@ -6,6 +6,7 @@ import com.github.tusharepro.core.TusharePro;
 import com.github.tusharepro.core.bean.BaseBean;
 import com.github.tusharepro.core.util.TypeUtil;
 import com.github.tusharepro.core.util.Util;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.lang.reflect.*;
@@ -19,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class Client {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
@@ -61,6 +63,7 @@ public class Client {
                 return f(request, beanClass);
             }
             catch (Exception e) {
+                e.printStackTrace();
                 if (timeUnit != null && timeOut != 0) {
                     try {
                         timeUnit.sleep(timeOut);
@@ -77,6 +80,10 @@ public class Client {
     private static <T extends BaseBean> List<T> f(Request<T> request, Class beanClass) throws IOException {
             return Optional.ofNullable(Client.post(request))
                     .map(response -> {
+                        if(response.getCode()!=0){
+                            log.error("class:{}, request:{} response:{}",beanClass.getSimpleName(),request, response);
+                            return null;
+                        }
                         List<String> fields = response.getData().getFields().stream()
                                 .map(Util::camelName)
                                 .collect(Collectors.toList());
