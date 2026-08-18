@@ -1,6 +1,9 @@
 
 ## 版本说明
 
+### 2.1.1
+> 修复了json解析错误, com/github/tusharepro/core/http/Response.java 增加 detail 字符串字段
+
 ### 2.1.0
 > 从2.0.5升级到2.1.0，主要是java版本升级和依赖包升级，支持java 17以上版本
 

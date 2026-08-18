@@ -21,5 +21,6 @@ public class Response {
     private Integer code;
     private String msg;
     private Data data;
+    private String detail;
 
 }
